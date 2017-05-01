@@ -1,0 +1,38 @@
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-xl-4 offset-xl-4 bg-faded pt-3 rounded loginForm-border">
+			<form *ngIf="!registered" [formGroup]="loginForm" (ngSubmit)="submit();" novalidate>
+				<h2 class="text-center mb-3">{{title}}</h2>
+				<input class="hidden-xs-up" type="checkbox" value="" formControlName="emailValid">
+				<input hidden class="hidden-xs-up" type="checkbox" value="" formControlName="passwordValid">
+				<div class="form-group row" [ngClass]="{'has-danger': emailError || (loginForm.get('email').invalid && loginForm.get('email').dirty), 'has-success': loginForm.get('email').valid}">
+					<label for="formEmail" class="col-4 col-sm-3 col-form-label">Email</label>
+					<div class="col-8 col-sm-9">
+						<input formControlName="email" [ngClass]="{'form-control-danger': emailError}" class="form-control" type="email" value="" id="formEmail" placeholder="Email">
+					</div>
+					<div *ngIf="emailError" class="form-control-feedback col-12">{{emailError}}</div>
+				</div>
+				<div class="form-group row" [ngClass]="{'has-danger': passwordError || (loginForm.get('password').invalid && loginForm.get('password').dirty), 'has-success': loginForm.get('password').valid}">
+					<label for="formPassword" class="col-4 col-sm-3 col-form-label">Password</label>
+					<div class="col-8 col-sm-9">
+						<input formControlName="password" [ngClass]="{'form-control-danger': passwordError}" class="form-control" type="password" value="" id="formPassword" placeholder="Password">
+					</div>
+					<div *ngIf="passwordError" class="form-control-feedback col-12">{{passwordError}}</div>
+				</div>
+				<div class="form-group row">
+					<div class="offset-4 offset-sm-3 col-8 col-sm-9">
+						<button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary float-right">Submit</button>
+						<button *ngIf="formEvent == 'login'" (click)="changeForm()" type="button" class="btn btn-success float-right">Registration</button>
+						<button *ngIf="formEvent == 'registration'" (click)="changeForm()" type="button" class="btn btn-success float-right">Sign in</button>
+					</div>
+				</div>
+				<p>{{loginForm.value | json}}</p>
+			</form>
+
+			<div *ngIf="registered" class="alert alert-success" role="alert">
+				<h4 class="alert-heading">Well done!</h4>
+				<p>Registration was successful, you can go to the <a routerLink="">main page</a></p>
+			</div>
+		</div>
+	</div>
+</div>
